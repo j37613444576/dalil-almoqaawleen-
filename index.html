@@ -665,6 +665,11 @@ async function initApp(){
   await refreshJobs();
   await refreshEquip();
 }
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/dalil-almoqaawleen-/sw.js");
+  });
+}
 </script>
 </body>
 </html>
