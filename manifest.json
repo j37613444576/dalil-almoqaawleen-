@@ -4,9 +4,9 @@
   "display": "standalone",
   "name": "دليل المقاولين",
   "orientation": "any",
-  "scope": "/",
+  "scope": "/dalil-almoqaawleen-/",
   "short_name": "دليل المقاولين",
-  "start_url": "/",
+  "start_url": "/dalil-almoqaawleen-/",
   "theme_color": "#0e2a3f",
   "description": "دليل المقاولين وأصحاب الحرفيين والمعدات",
   "icons": [
