@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل المقاولين — منصة ربط شركات المقاولات بالحرفيين وأصحاب المعدات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blueprint:#0E2A3F;--blueprint-line:#3E7CA6;--paper:#F1EEE4;
+    --amber:#E8A93A;--amber-deep:#C77F1B;--steel:#5F7C8C;--danger:#B23A2E;--ok:#3E7C5A;--radius:2px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Cairo',sans-serif;
+    background:repeating-linear-gradient(0deg, rgba(95,163,211,0.07) 0px, rgba(95,163,211,0.07) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(95,163,211,0.07) 0px, rgba(95,163,211,0.07) 1px, transparent 1px, transparent 40px), var(--blueprint);
+    color:var(--paper);min-height:100vh;}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px 18px 60px;}
+  header{border:1.5px dashed var(--blueprint-line);padding:22px 20px;margin-bottom:22px;position:relative;background:rgba(255,255,255,0.02);}
+  header::before{content:"مخطط تنفيذي";position:absolute;top:-11px;right:16px;background:var(--blueprint);padding:0 8px;font-size:11px;color:var(--blueprint-line);letter-spacing:1px;}
+  h1{font-family:'Tajawal',sans-serif;font-weight:900;font-size:clamp(24px,5vw,36px);margin:0 0 4px;color:#fff;}
+  header p{margin:0;color:var(--blueprint-line);font-size:14px;}
+  nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;border-bottom:2px solid var(--blueprint-line);}
+  nav button{font-family:'Tajawal',sans-serif;font-weight:700;font-size:13.5px;background:transparent;border:none;color:var(--steel);padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;}
+  nav button.active{color:var(--amber);border-bottom-color:var(--amber);}
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .2s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+  select,input,textarea{font-family:'Cairo',sans-serif;background:rgba(255,255,255,0.05);border:1.5px solid var(--blueprint-line);color:var(--paper);padding:10px 12px;border-radius:var(--radius);font-size:14.5px;}
+  select:focus,input:focus,textarea:focus{outline:2px solid var(--amber);outline-offset:1px;}
+  .filters select,.filters input{flex:1;min-width:150px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;}
+  .card{background:rgba(241,238,228,0.03);border:1px solid var(--blueprint-line);border-right:4px solid var(--amber);padding:16px;position:relative;}
+  .card .badge{position:absolute;top:10px;left:10px;font-size:10.5px;font-family:'Tajawal',sans-serif;font-weight:700;color:var(--blueprint);background:var(--amber);padding:2px 8px;}
+  .card h3{font-family:'Tajawal',sans-serif;margin:0 0 6px;font-size:18px;color:#fff;padding-left:60px;}
+  .trade-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
+  .trade-tag{display:inline-block;font-size:11.5px;color:var(--amber);border:1px solid var(--amber-deep);padding:2px 7px;}
+  .card p{margin:4px 0;font-size:13.5px;color:var(--paper);opacity:0.9;line-height:1.6;}
+  .card .meta{font-size:12px;color:var(--steel);margin-top:8px;}
+  .card .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .btn{font-family:'Tajawal',sans-serif;font-weight:700;font-size:13px;border:none;padding:8px 14px;border-radius:var(--radius);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+  .btn-primary{background:var(--amber);color:var(--blueprint);}
+  .btn-ghost{background:transparent;border:1px solid var(--blueprint-line);color:var(--paper);}
+  .btn-danger{background:transparent;border:1px solid var(--danger);color:var(--danger);}
+  form.stamp{max-width:520px;border:1.5px dashed var(--blueprint-line);padding:22px;background:rgba(255,255,255,0.02);}
+  form.stamp label{display:block;font-size:13px;color:var(--blueprint-line);margin:14px 0 5px;font-family:'Tajawal',sans-serif;}
+  form.stamp label:first-child{margin-top:0;}
+  form.stamp select,form.stamp input,form.stamp textarea{width:100%;}
+  form.stamp textarea{resize:vertical;min-height:70px;}
+  .checkbox-group{display:flex;flex-wrap:wrap;gap:8px;border:1.5px solid var(--blueprint-line);padding:10px;}
+  .checkbox-item{display:flex;align-items:center;gap:5px;font-size:13px;background:rgba(255,255,255,0.04);padding:5px 9px;border:1px solid transparent;cursor:pointer;}
+  .checkbox-item input{width:auto;padding:0;margin:0;accent-color:var(--amber);}
+  .checkbox-item.checked{border-color:var(--amber);color:var(--amber);}
+  .checkbox-hint{font-size:11.5px;color:var(--steel);margin-top:5px;}
+  .empty{text-align:center;padding:50px 20px;color:var(--steel);border:1.5px dashed var(--blueprint-line);}
+  .empty span{font-size:34px;display:block;margin-bottom:10px;}
+  .toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:10px 22px;font-family:'Tajawal',sans-serif;font-weight:700;font-size:13.5px;border-radius:var(--radius);opacity:0;pointer-events:none;transition:opacity .25s;z-index:50;}
+  .toast.show{opacity:1;}
+  .notice{font-size:12px;color:var(--steel);margin-top:22px;text-align:center;border-top:1px solid rgba(95,163,211,0.2);padding-top:14px;}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(6,16,24,0.9);z-index:60;align-items:center;justify-content:center;padding:16px;overflow-y:auto;}
+  .overlay.show{display:flex;}
+  .chatbox{background:var(--blueprint);border:1.5px solid var(--blueprint-line);width:100%;max-width:440px;max-height:80vh;display:flex;flex-direction:column;}
+  .chatbox header{margin:0;border:none;background:transparent;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--blueprint-line);}
+  .chatbox header::before{content:none;}
+  .chatbox h4{margin:0;font-family:'Tajawal',sans-serif;color:#fff;font-size:15px;}
+  .close-x{background:none;border:none;color:var(--steel);font-size:20px;cursor:pointer;}
+  .chat-messages{flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-height:120px;}
+  .msg{max-width:82%;padding:8px 12px;font-size:13.5px;line-height:1.5;border:1px solid var(--blueprint-line);align-self:flex-start;}
+  .msg .sender{display:block;font-size:11px;color:var(--amber);font-family:'Tajawal',sans-serif;margin-bottom:2px;}
+  .msg.mine{align-self:flex-end;background:rgba(232,169,58,0.12);border-color:var(--amber-deep);}
+  .chat-empty{color:var(--steel);font-size:13px;text-align:center;padding:20px 0;}
+  .chat-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--blueprint-line);}
+  .chat-input-row input{flex:1;}
+  .gatebox{background:var(--blueprint);border:1.5px solid var(--amber-deep);width:100%;max-width:380px;padding:28px 24px;text-align:center;margin:20px auto;}
+  .gatebox h2{font-family:'Tajawal',sans-serif;color:#fff;margin:0 0 6px;font-size:20px;}
+  .gatebox p{color:var(--steel);font-size:13px;margin:0 0 18px;}
+  .gatebox input,.gatebox select{width:100%;margin-bottom:12px;}
+  .gate-error{color:var(--danger);font-size:12.5px;min-height:18px;margin-bottom:8px;}
+  .admin-code{background:rgba(232,169,58,0.1);border:1px dashed var(--amber);padding:14px;margin-top:14px;font-family:'Tajawal',sans-serif;font-size:15px;color:var(--amber);text-align:right;line-height:2;}
+  .spinner{text-align:center;padding:40px;color:var(--steel);}
+  .toggle-link{background:none;border:none;color:var(--blueprint-line);font-size:12.5px;text-decoration:underline;cursor:pointer;margin-top:8px;}
+  .hidden{display:none !important;}
+  .admin-checkbox{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--paper);text-align:right;margin-bottom:12px;}
+  .admin-checkbox input{width:auto;}
+</style>
+</head>
+<body>
+
+<div class="overlay show" id="gateOverlay">
+  <div class="gatebox" id="loginBox">
+    <h2 id="gateTitle">دليل المقاولين</h2>
+    <p>هذا التطبيق للمشتركين فقط. إذا ماكو حساب عندك، اشترك الحين واستلم اسم المستخدم وكلمة المرور مباشرة</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:16px" target="_blank" href="https://wa.me/9647727861476?text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%A7%D9%84%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D8%A8%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D8%AF%D9%84%D9%8A%D9%84%20%D8%A7%D9%84%D9%85%D9%82%D8%A7%D9%88%D9%84%D9%8A%D9%86">📱 اشترك الحين عبر واتساب</a>
+    <div style="border-top:1px solid var(--blueprint-line);margin:6px 0 16px;padding-top:16px">
+      <p style="margin-bottom:10px">عندك حساب؟ سجّل دخولك:</p>
+      <input type="text" id="loginUser" placeholder="اسم المستخدم">
+      <input type="password" id="loginPass" placeholder="كلمة المرور">
+      <div class="gate-error" id="gateError"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" id="loginSubmit">دخول</button>
+    </div>
+  </div>
+
+  <div class="gatebox hidden" id="adminBox">
+    <h2>لوحة الإدارة</h2>
+    <p>أنشئ حساب اشتراك جديد لمستخدم</p>
+    <input type="password" id="adminPass" placeholder="كلمة مرور الإدارة">
+    <input type="text" id="newUser" placeholder="اسم المستخدم الجديد">
+    <input type="text" id="newPass" placeholder="كلمة مرور الحساب">
+    <select id="newDuration">
+      <option value="30">اشتراك 30 يوم</option>
+      <option value="90">اشتراك 90 يوم</option>
+      <option value="365">اشتراك سنة كاملة</option>
+      <option value="perm">دائم (بدون انتهاء)</option>
+    </select>
+    <label class="admin-checkbox"><input type="checkbox" id="newIsAdmin"> صلاحية إدارية (يقدر يحذف أي منشور بالتطبيق)</label>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" id="adminSubmit">إنشاء الحساب</button>
+    <div class="gate-error" id="adminError"></div>
+    <div id="adminResult"></div>
+    <button class="toggle-link" id="showLogin">رجوع لتسجيل الدخول</button>
+  </div>
+</div>
+
+<div class="wrap" id="mainApp" style="display:none">
+  <header>
+    <h1>دليل المقاولين</h1>
+    <p>منصة تربط شركات ومكاتب المقاولات بالحرفيين وأصحاب المعدات والآليات</p>
+  </header>
+
+  <nav>
+    <button class="tab-btn active" data-tab="pros">الحرفيون</button>
+    <button class="tab-btn" data-tab="equip">المعدات والآليات</button>
+    <button class="tab-btn" data-tab="jobs">المشاريع المطروحة</button>
+    <button class="tab-btn" data-tab="addPro">+ حرفي</button>
+    <button class="tab-btn" data-tab="addEquip">+ معدة</button>
+    <button class="tab-btn" data-tab="addJob">+ مشروع</button>
+  </nav>
+
+  <div class="panel active" id="pros">
+    <div class="filters">
+      <input id="proSearch" type="text" placeholder="🔍 بحث بالاسم أو الوصف...">
+      <select id="proTradeFilter"><option value="">كل المهن</option></select>
+      <input id="proCityFilter" type="text" placeholder="فلترة حسب المدينة...">
+    </div>
+    <div class="grid" id="prosGrid"><div class="spinner">جاري التحميل...</div></div>
+  </div>
+
+  <div class="panel" id="equip">
+    <div class="filters">
+      <input id="equipSearch" type="text" placeholder="🔍 بحث بالاسم أو الوصف...">
+      <select id="equipTypeFilter"><option value="">كل أنواع المعدات</option></select>
+      <input id="equipCityFilter" type="text" placeholder="فلترة حسب المدينة...">
+    </div>
+    <div class="grid" id="equipGrid"><div class="spinner">جاري التحميل...</div></div>
+  </div>
+
+  <div class="panel" id="jobs">
+    <div class="filters">
+      <input id="jobSearch" type="text" placeholder="🔍 بحث بالعنوان أو الوصف...">
+      <select id="jobTradeFilter"><option value="">كل المهن</option></select>
+      <input id="jobCityFilter" type="text" placeholder="فلترة حسب المدينة...">
+    </div>
+    <div class="grid" id="jobsGrid"><div class="spinner">جاري التحميل...</div></div>
+  </div>
+
+  <div class="panel" id="addPro">
+    <form class="stamp" id="proForm">
+      <label>الاسم الكامل</label>
+      <input required id="p_name" type="text" placeholder="مثال: أبو علي">
+      <label>المهن (تگدر تختار أكثر من وحدة)</label>
+      <div class="checkbox-group" id="p_trade_group"></div>
+      <div class="checkbox-hint">مثال: كهربائي + سباك إذا كنت تشتغل بالاثنين</div>
+      <label>مهنة غير موجودة بالقائمة؟ اكتبها هنا (افصل بفاصلة إذا أكثر من وحدة)</label>
+      <input id="p_trade_custom" type="text" placeholder="مثال: عازل حراري, تنظيف خزانات">
+      <label>المدينة / المنطقة</label>
+      <input required id="p_city" type="text" placeholder="مثال: بغداد - الكرادة">
+      <label>رقم الهاتف (واتساب إن أمكن)</label>
+      <input required id="p_phone" type="tel" placeholder="07xxxxxxxxx">
+      <label>سنوات الخبرة (اختياري)</label>
+      <input id="p_years" type="number" min="0" placeholder="مثال: 8">
+      <label>ملاحظات / تخصص دقيق (اختياري)</label>
+      <textarea id="p_notes" placeholder="مثال: تمديدات كهربائية منزلية وتجارية"></textarea>
+      <div style="margin-top:20px"><button type="submit" class="btn btn-primary">نشر بيانات المهنة</button></div>
+    </form>
+  </div>
+
+  <div class="panel" id="addEquip">
+    <form class="stamp" id="equipForm">
+      <label>اسم الشركة / صاحب المعدة</label>
+      <input required id="e_name" type="text" placeholder="مثال: شركة الفرات للمعدات">
+      <label>أنواع المعدات المتوفرة (تگدر تختار أكثر من وحدة)</label>
+      <div class="checkbox-group" id="e_type_group"></div>
+      <div class="checkbox-hint">مثال: شفر + قلابة إذا عندك الاثنين بنفس المنشور</div>
+      <label>معدة غير موجودة بالقائمة؟ اكتبها هنا (افصل بفاصلة إذا أكثر من وحدة)</label>
+      <input id="e_type_custom" type="text" placeholder="مثال: كباس, رافعة أبراج">
+      <label>المدينة / المنطقة</label>
+      <input required id="e_city" type="text" placeholder="مثال: البصرة">
+      <label>رقم الهاتف (واتساب إن أمكن)</label>
+      <input required id="e_phone" type="tel" placeholder="07xxxxxxxxx">
+      <label>ملاحظات (نوع الاستئجار، السعر التقريبي...)</label>
+      <textarea id="e_notes" placeholder="مثال: إيجار يومي، مع سائق"></textarea>
+      <div style="margin-top:20px"><button type="submit" class="btn btn-primary">نشر بيانات المعدة</button></div>
+    </form>
+  </div>
+
+  <div class="panel" id="addJob">
+    <form class="stamp" id="jobForm">
+      <label>عنوان المشروع</label>
+      <input required id="j_title" type="text" placeholder="مثال: تبليط أرضية منزل 150 م²">
+      <label>المهن أو المعدات المطلوبة (تگدر تختار أكثر من وحدة)</label>
+      <div class="checkbox-group" id="j_trade_group"></div>
+      <label>مهنة أو معدة غير موجودة بالقائمة؟ اكتبها هنا (افصل بفاصلة إذا أكثر من وحدة)</label>
+      <input id="j_trade_custom" type="text" placeholder="مثال: عازل حراري, كباس">
+      <label>المدينة / المنطقة</label>
+      <input required id="j_city" type="text" placeholder="مثال: البصرة">
+      <label>الميزانية التقريبية (اختياري)</label>
+      <input id="j_budget" type="text" placeholder="مثال: 500,000 - 800,000 دينار">
+      <label>وصف العمل المطلوب</label>
+      <textarea required id="j_desc" placeholder="تفاصيل العمل، المساحة، المواد، الجدول الزمني..."></textarea>
+      <label>رقم التواصل</label>
+      <input required id="j_phone" type="tel" placeholder="07xxxxxxxxx">
+      <div style="margin-top:20px"><button type="submit" class="btn btn-primary">نشر المشروع</button></div>
+    </form>
+  </div>
+
+  <div class="notice">البيانات المُدخلة هنا مشتركة ومرئية لكل المشتركين — لا تكتب معلومات حساسة لا تريد نشرها.</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="overlay" id="chatOverlay">
+  <div class="chatbox">
+    <header>
+      <h4 id="chatTitle">الدردشة</h4>
+      <button class="close-x" id="chatClose">✕</button>
+    </header>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="اكتب رسالتك...">
+      <button class="btn btn-primary" id="chatSend">إرسال</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore, collection, addDoc, getDocs, deleteDoc, doc, getDoc, setDoc,
+  query, orderBy, serverTimestamp, Timestamp
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB4BAc_3BFSIOb2icZZ15cphHbw8K819k4",
+  authDomain: "dalil-almoqaawleen.firebaseapp.com",
+  projectId: "dalil-almoqaawleen",
+  storageBucket: "dalil-almoqaawleen.firebasestorage.app",
+  messagingSenderId: "756466700274",
+  appId: "1:756466700274:web:f8afba26ff42c087d7256b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const ADMIN_PASSWORD = "ahmed2026"; // غيّرها لكلمة سر خاصة فيك بأقرب فرصة
+const SECRET_ADMIN_PASSWORD = "Qk7!ahmedX92"; // كلمة سر سرية تفتح لوحة الإدارة من نموذج الدخول العادي
+
+const TRADES = [
+  "كهربائي","سباك","نجار","بناء / عامل بناء","دهان","حداد",
+  "مبلط (بلاط)","تكييف وتبريد","لحام","جبس وديكور",
+  "تنسيق حدائق","زجاج والمنيوم","ميكانيك سيارات","أخرى"
+];
+const EQUIPMENT_TYPES = [
+  "حفارة (بيكهو)","لودر","كرين / ونش","خلاطة خرسانة","شاحنة قلاب",
+  "بلدوزر","شفر","مضخة خرسانة","رافعة شوكية","مولدة كهرباء","سكوبر","أخرى"
+];
+
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+function showToast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+function escapeHtml(str){
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+function fmtDate(ts){
+  if(!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('ar-EG', {year:'numeric', month:'short', day:'numeric'});
+}
+function waLink(phone){
+  const digits = phone.replace(/[^\d]/g,'').replace(/^0/, '964');
+  return `https://wa.me/${digits}`;
+}
+function renderCheckboxGroup(containerId, list){
+  const el = $(containerId);
+  el.innerHTML = list.map((item,i)=>`
+    <label class="checkbox-item" data-idx="${i}">
+      <input type="checkbox" value="${escapeHtml(item)}"> ${escapeHtml(item)}
+    </label>`).join('');
+  el.querySelectorAll('.checkbox-item').forEach(label=>{
+    const cb = label.querySelector('input');
+    cb.addEventListener('change', ()=> label.classList.toggle('checked', cb.checked));
+  });
+}
+function getCheckedValues(containerId){
+  return Array.from($(containerId).querySelectorAll('input:checked')).map(i=>i.value);
+}
+function getCustomValues(inputId){
+  const raw = $(inputId).value.trim();
+  if(!raw) return [];
+  return raw.split(/[,،]/).map(s=>s.trim()).filter(Boolean);
+}
+function mergeUnique(a, b){
+  return Array.from(new Set([...a, ...b]));
+}
+
+let currentUser = null;
+let isAdminUser = false;
+
+// ---------- الوصول للوحة الإدارة عبر كلمة سر مخفية بنفس نموذج الدخول ----------
+$('#showLogin').addEventListener('click', ()=>{
+  $('#adminBox').classList.add('hidden');
+  $('#loginBox').classList.remove('hidden');
+});
+
+// ---------- تسجيل الدخول ----------
+async function attemptLogin(){
+  const username = $('#loginUser').value.trim().toLowerCase();
+  const password = $('#loginPass').value;
+  const errEl = $('#gateError');
+  errEl.textContent = '';
+  if(!username || !password){ errEl.textContent = 'أدخل اسم المستخدم وكلمة المرور'; return; }
+
+  if(password === SECRET_ADMIN_PASSWORD){
+    $('#loginUser').value = ''; $('#loginPass').value = '';
+    $('#loginBox').classList.add('hidden');
+    $('#adminBox').classList.remove('hidden');
+    return;
+  }
+
+  $('#loginSubmit').textContent = 'جاري التحقق...';
+  try{
+    const snap = await getDoc(doc(db, 'subscribers', username));
+    if(!snap.exists()){ errEl.textContent = 'اسم المستخدم غير موجود'; $('#loginSubmit').textContent='دخول'; return; }
+    const data = snap.data();
+    if(data.password !== password){ errEl.textContent = 'كلمة المرور غير صحيحة'; $('#loginSubmit').textContent='دخول'; return; }
+    if(data.expiresAt){
+      const exp = data.expiresAt.toDate ? data.expiresAt.toDate() : new Date(data.expiresAt);
+      if(exp < new Date()){ errEl.textContent = 'انتهى اشتراكك — تواصل مع الإدارة للتجديد'; $('#loginSubmit').textContent='دخول'; return; }
+    }
+    currentUser = username;
+    isAdminUser = data.isAdmin === true;
+    $('#gateOverlay').classList.remove('show');
+    $('#mainApp').style.display = 'block';
+    initApp();
+  }catch(e){
+    errEl.textContent = 'صار خطأ، حاول مرة أخرى';
+    $('#loginSubmit').textContent = 'دخول';
+  }
+}
+$('#loginSubmit').addEventListener('click', attemptLogin);
+$('#loginPass').addEventListener('keydown', (e)=>{ if(e.key==='Enter') attemptLogin(); });
+
+// ---------- لوحة الإدارة: إنشاء حساب مشترك ----------
+$('#adminSubmit').addEventListener('click', async ()=>{
+  const pass = $('#adminPass').value;
+  const errEl = $('#adminError');
+  errEl.textContent = '';
+  if(pass !== ADMIN_PASSWORD){ errEl.textContent = 'كلمة مرور الإدارة غير صحيحة'; return; }
+  const username = $('#newUser').value.trim().toLowerCase();
+  const password = $('#newPass').value;
+  const duration = $('#newDuration').value;
+  const isAdmin = $('#newIsAdmin').checked;
+  if(!username || !password){ errEl.textContent = 'أدخل اسم المستخدم وكلمة المرور للحساب الجديد'; return; }
+
+  let expiresAt = null;
+  if(duration !== 'perm'){
+    const days = parseInt(duration, 10);
+    const exp = new Date();
+    exp.setDate(exp.getDate() + days);
+    expiresAt = Timestamp.fromDate(exp);
+  }
+
+  await setDoc(doc(db, 'subscribers', username), {
+    password, expiresAt, isAdmin, createdAt: serverTimestamp()
+  });
+
+  $('#adminResult').innerHTML = `
+    <div class="admin-code">
+      اسم المستخدم: ${escapeHtml(username)}<br>
+      كلمة المرور: ${escapeHtml(password)}<br>
+      ${isAdmin ? '⭐ صلاحية إدارية مفعّلة<br>' : ''}
+      ${expiresAt ? 'الاشتراك ينتهي بتاريخ: ' + expiresAt.toDate().toLocaleDateString('ar-EG') : 'حساب دائم بدون انتهاء'}
+    </div>`;
+  $('#newUser').value = ''; $('#newPass').value = ''; $('#newIsAdmin').checked = false;
+});
+
+// ---------- تبديل التبويبات ----------
+function initTabs(){
+  $$('.tab-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      $$('.tab-btn').forEach(b=>b.classList.remove('active'));
+      $$('.panel').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      $('#'+btn.dataset.tab).classList.add('active');
+    });
+  });
+}
+
+function fillSelects(){
+  ['#proTradeFilter','#jobTradeFilter'].forEach(sel=>{
+    const el = $(sel);
+    TRADES.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; el.appendChild(o); });
+  });
+  $('#equipTypeFilter').innerHTML = '<option value="">كل أنواع المعدات</option>';
+  EQUIPMENT_TYPES.forEach(t=>{ const o=document.createElement('option'); o.value=t; o.textContent=t; $('#equipTypeFilter').appendChild(o); });
+  renderCheckboxGroup('#p_trade_group', TRADES);
+  renderCheckboxGroup('#e_type_group', EQUIPMENT_TYPES);
+  renderCheckboxGroup('#j_trade_group', TRADES);
+}
+
+let professionals=[], jobs=[], equipment=[];
+
+async function loadCollection(name){
+  const q = query(collection(db, name), orderBy('createdAt','desc'));
+  const snap = await getDocs(q);
+  return snap.docs.map(d=>({id:d.id, ...d.data()}));
+}
+async function refreshPros(){ professionals = await loadCollection('professionals'); renderPros(); }
+async function refreshJobs(){ jobs = await loadCollection('jobs'); renderJobs(); }
+async function refreshEquip(){ equipment = await loadCollection('equipment'); renderEquip(); }
+
+function canDelete(item){ return isAdminUser || item.owner === currentUser; }
+function deleteBtn(id, col, item){
+  if(!canDelete(item)) return '';
+  return `<button class="btn btn-danger" data-id="${id}" data-col="${col}">حذف</button>`;
+}
+function tagsHtml(arr){
+  if(!arr || arr.length===0) return '';
+  return `<div class="trade-tags">${arr.map(t=>`<span class="trade-tag">${escapeHtml(t)}</span>`).join('')}</div>`;
+}
+
+function renderPros(){
+  const tradeF = $('#proTradeFilter').value;
+  const cityF = $('#proCityFilter').value.trim().toLowerCase();
+  const searchF = $('#proSearch').value.trim().toLowerCase();
+  const grid = $('#prosGrid');
+  const list = professionals.filter(p=>
+    (!tradeF || (p.trades||[]).includes(tradeF)) &&
+    (!cityF || p.city.toLowerCase().includes(cityF)) &&
+    (!searchF || (p.name+' '+(p.notes||'')).toLowerCase().includes(searchF))
+  );
+  if(list.length===0){ grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><span>🛠️</span>لا يوجد حرفيون مطابقون حالياً</div>`; return; }
+  grid.innerHTML = list.map(p=>`
+    <div class="card">
+      <span class="badge">متاح</span>
+      <h3>${escapeHtml(p.name)}</h3>
+      ${tagsHtml(p.trades)}
+      <p>📍 ${escapeHtml(p.city)}</p>
+      ${p.years?`<p>⏱️ خبرة ${escapeHtml(String(p.years))} سنوات</p>`:''}
+      ${p.notes?`<p>${escapeHtml(p.notes)}</p>`:''}
+      <div class="meta">أُضيف بتاريخ ${fmtDate(p.createdAt)}</div>
+      <div class="actions">
+        <a class="btn btn-primary" href="tel:${p.phone}">📞 اتصال</a>
+        <a class="btn btn-ghost" target="_blank" href="${waLink(p.phone)}">واتساب</a>
+        <button class="btn btn-ghost" data-chat-id="${p.id}" data-chat-type="professionals" data-chat-label="${escapeHtml(p.name)}">💬 رسالة</button>
+        ${deleteBtn(p.id,'professionals',p)}
+      </div>
+    </div>`).join('');
+}
+
+function renderEquip(){
+  const typeF = $('#equipTypeFilter').value;
+  const cityF = $('#equipCityFilter').value.trim().toLowerCase();
+  const searchF = $('#equipSearch').value.trim().toLowerCase();
+  const grid = $('#equipGrid');
+  const list = equipment.filter(e=>
+    (!typeF || (e.types||[]).includes(typeF)) &&
+    (!cityF || e.city.toLowerCase().includes(cityF)) &&
+    (!searchF || (e.name+' '+(e.notes||'')).toLowerCase().includes(searchF))
+  );
+  if(list.length===0){ grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><span>🚜</span>لا توجد معدات مطابقة حالياً</div>`; return; }
+  grid.innerHTML = list.map(e=>`
+    <div class="card">
+      <span class="badge">متاح</span>
+      <h3>${escapeHtml(e.name)}</h3>
+      ${tagsHtml(e.types)}
+      <p>📍 ${escapeHtml(e.city)}</p>
+      ${e.notes?`<p>${escapeHtml(e.notes)}</p>`:''}
+      <div class="meta">أُضيف بتاريخ ${fmtDate(e.createdAt)}</div>
+      <div class="actions">
+        <a class="btn btn-primary" href="tel:${e.phone}">📞 اتصال</a>
+        <a class="btn btn-ghost" target="_blank" href="${waLink(e.phone)}">واتساب</a>
+        <button class="btn btn-ghost" data-chat-id="${e.id}" data-chat-type="equipment" data-chat-label="${escapeHtml(e.name)}">💬 رسالة</button>
+        ${deleteBtn(e.id,'equipment',e)}
+      </div>
+    </div>`).join('');
+}
+
+function renderJobs(){
+  const tradeF = $('#jobTradeFilter').value;
+  const cityF = $('#jobCityFilter').value.trim().toLowerCase();
+  const searchF = $('#jobSearch').value.trim().toLowerCase();
+  const grid = $('#jobsGrid');
+  const list = jobs.filter(j=>
+    (!tradeF || (j.trades||[]).includes(tradeF)) &&
+    (!cityF || j.city.toLowerCase().includes(cityF)) &&
+    (!searchF || (j.title+' '+j.desc).toLowerCase().includes(searchF))
+  );
+  if(list.length===0){ grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><span>📋</span>لا توجد مشاريع مطروحة حالياً</div>`; return; }
+  grid.innerHTML = list.map(j=>`
+    <div class="card">
+      <span class="badge">مطلوب</span>
+      <h3>${escapeHtml(j.title)}</h3>
+      ${tagsHtml(j.trades)}
+      <p>📍 ${escapeHtml(j.city)}</p>
+      ${j.budget?`<p>💰 ${escapeHtml(j.budget)}</p>`:''}
+      <p>${escapeHtml(j.desc)}</p>
+      <div class="meta">نُشر بتاريخ ${fmtDate(j.createdAt)}</div>
+      <div class="actions">
+        <a class="btn btn-primary" href="tel:${j.phone}">📞 اتصال</a>
+        <a class="btn btn-ghost" target="_blank" href="${waLink(j.phone)}">واتساب</a>
+        <button class="btn btn-ghost" data-chat-id="${j.id}" data-chat-type="jobs" data-chat-label="${escapeHtml(j.title)}">💬 رسالة</button>
+        ${deleteBtn(j.id,'jobs',j)}
+      </div>
+    </div>`).join('');
+}
+
+document.addEventListener('click', async (e)=>{
+  if(e.target.matches('.btn-danger')){
+    const id = e.target.dataset.id, col = e.target.dataset.col;
+    if(!confirm('هل تريد حذف هذا العنصر؟')) return;
+    await deleteDoc(doc(db, col, id));
+    showToast('تم الحذف');
+    if(col==='professionals') refreshPros();
+    if(col==='jobs') refreshJobs();
+    if(col==='equipment') refreshEquip();
+  }
+});
+
+$('#proTradeFilter').addEventListener('change', renderPros);
+$('#proCityFilter').addEventListener('input', renderPros);
+$('#proSearch').addEventListener('input', renderPros);
+$('#equipTypeFilter').addEventListener('change', renderEquip);
+$('#equipCityFilter').addEventListener('input', renderEquip);
+$('#equipSearch').addEventListener('input', renderEquip);
+$('#jobTradeFilter').addEventListener('change', renderJobs);
+$('#jobCityFilter').addEventListener('input', renderJobs);
+$('#jobSearch').addEventListener('input', renderJobs);
+
+$('#proForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const trades = mergeUnique(getCheckedValues('#p_trade_group'), getCustomValues('#p_trade_custom'));
+  if(trades.length===0){ showToast('اختار أو اكتب مهنة وحدة على الأقل'); return; }
+  await addDoc(collection(db,'professionals'), {
+    name:$('#p_name').value.trim(), trades, city:$('#p_city').value.trim(),
+    phone:$('#p_phone').value.trim(), years:$('#p_years').value.trim(), notes:$('#p_notes').value.trim(),
+    owner: currentUser, createdAt: serverTimestamp()
+  });
+  e.target.reset();
+  $$('#p_trade_group .checkbox-item').forEach(l=>l.classList.remove('checked'));
+  $('#p_trade_custom').value = '';
+  showToast('تم نشر بياناتك بنجاح');
+  $('[data-tab="pros"]').click();
+  refreshPros();
+});
+
+$('#equipForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const types = mergeUnique(getCheckedValues('#e_type_group'), getCustomValues('#e_type_custom'));
+  if(types.length===0){ showToast('اختار أو اكتب نوع معدة وحدة على الأقل'); return; }
+  await addDoc(collection(db,'equipment'), {
+    name:$('#e_name').value.trim(), types, city:$('#e_city').value.trim(),
+    phone:$('#e_phone').value.trim(), notes:$('#e_notes').value.trim(),
+    owner: currentUser, createdAt: serverTimestamp()
+  });
+  e.target.reset();
+  $$('#e_type_group .checkbox-item').forEach(l=>l.classList.remove('checked'));
+  $('#e_type_custom').value = '';
+  showToast('تم نشر بيانات المعدة بنجاح');
+  $('[data-tab="equip"]').click();
+  refreshEquip();
+});
+
+$('#jobForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const trades = mergeUnique(getCheckedValues('#j_trade_group'), getCustomValues('#j_trade_custom'));
+  if(trades.length===0){ showToast('اختار أو اكتب مهنة أو معدة وحدة على الأقل'); return; }
+  await addDoc(collection(db,'jobs'), {
+    title:$('#j_title').value.trim(), trades, city:$('#j_city').value.trim(),
+    budget:$('#j_budget').value.trim(), desc:$('#j_desc').value.trim(), phone:$('#j_phone').value.trim(),
+    owner: currentUser, createdAt: serverTimestamp()
+  });
+  e.target.reset();
+  $$('#j_trade_group .checkbox-item').forEach(l=>l.classList.remove('checked'));
+  $('#j_trade_custom').value = '';
+  showToast('تم نشر المشروع بنجاح');
+  $('[data-tab="jobs"]').click();
+  refreshJobs();
+});
+
+// ---------- الدردشة ----------
+let currentChatId = null, currentChatType = null;
+
+async function loadChat(itemType, itemId){
+  const snap = await getDocs(query(collection(db, 'messages')));
+  return snap.docs.map(d=>({id:d.id, ...d.data()}))
+    .filter(m=>m.itemType===itemType && m.itemId===itemId)
+    .sort((a,b)=>(a.createdAt?.seconds||0)-(b.createdAt?.seconds||0));
+}
+async function renderChat(){
+  const box = $('#chatMessages');
+  const list = await loadChat(currentChatType, currentChatId);
+  if(list.length===0){ box.innerHTML = `<div class="chat-empty">ما توجد رسائل بعد — ابدأ المحادثة</div>`; return; }
+  box.innerHTML = list.map(m=>`
+    <div class="msg ${m.senderName===currentUser?'mine':''}">
+      <span class="sender">${escapeHtml(m.senderName)}</span>
+      ${escapeHtml(m.text)}
+    </div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+async function openChat(itemType, itemId, label){
+  currentChatType = itemType; currentChatId = itemId;
+  $('#chatTitle').textContent = 'الدردشة — ' + label;
+  $('#chatOverlay').classList.add('show');
+  await renderChat();
+}
+function closeChat(){ $('#chatOverlay').classList.remove('show'); currentChatId=null; }
+$('#chatClose').addEventListener('click', closeChat);
+$('#chatOverlay').addEventListener('click', (e)=>{ if(e.target.id==='chatOverlay') closeChat(); });
+
+async function sendChatMessage(){
+  const input = $('#chatInput');
+  const text = input.value.trim();
+  if(!text || !currentChatId) return;
+  await addDoc(collection(db,'messages'), {
+    itemType: currentChatType, itemId: currentChatId, senderName: currentUser, text, createdAt: serverTimestamp()
+  });
+  input.value = '';
+  await renderChat();
+}
+$('#chatSend').addEventListener('click', sendChatMessage);
+$('#chatInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') sendChatMessage(); });
+
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('[data-chat-id]');
+  if(btn) openChat(btn.dataset.chatType, btn.dataset.chatId, btn.dataset.chatLabel);
+});
+
+// ---------- بدء التشغيل ----------
+let appInitialized = false;
+async function initApp(){
+  if(appInitialized) return;
+  appInitialized = true;
+  initTabs();
+  fillSelects();
+  await refreshPros();
+  await refreshJobs();
+  await refreshEquip();
+}
+</script>
+</body>
+</html>
