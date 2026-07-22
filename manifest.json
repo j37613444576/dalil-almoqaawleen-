@@ -1,0 +1,12 @@
+{
+  "background_color": "#0e2a40",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "دليل المقاولين",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "دليل المقاولين",
+  "start_url": "/",
+  "theme_color": "#0e2a3f",
+  "description": "منصة تربط شركات المقاولات بالحرفيين وأصحاب المعدات"
+}
